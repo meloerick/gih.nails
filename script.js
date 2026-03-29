@@ -35,6 +35,11 @@ const formFeedback = document.getElementById("formFeedback");
 const dateInput = document.getElementById("data");
 const phoneInput = document.getElementById("telefone");
 const timeInput = document.getElementById("horario");
+const serviceInput = document.getElementById("servico");
+const additionalServiceInput = document.getElementById("servicoAdicional");
+const addOnToggle = document.getElementById("addOnToggle");
+const additionalServiceWrap = document.getElementById("additionalServiceWrap");
+const totalPriceValue = document.getElementById("totalPriceValue");
 
 function buildWaUrl(message) {
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
@@ -51,6 +56,61 @@ function setFormFeedback(message, state = "success") {
   if (!formFeedback) return;
   formFeedback.textContent = message;
   formFeedback.dataset.state = state;
+}
+
+function parseSelectedServicePrice(selectElement) {
+  if (!selectElement) return 0;
+  const selectedOption = selectElement.options[selectElement.selectedIndex];
+  if (!selectedOption) return 0;
+  const price = Number(selectedOption.dataset.price || 0);
+  return Number.isFinite(price) ? price : 0;
+}
+
+function formatPriceBr(value) {
+  return `R$ ${value.toFixed(2).replace(".", ",")}`;
+}
+
+function updateTotalPriceDisplay() {
+  if (!totalPriceValue) return 0;
+  const mainServicePrice = parseSelectedServicePrice(serviceInput);
+  const additionalPrice = parseSelectedServicePrice(additionalServiceInput);
+  const totalPrice = mainServicePrice + additionalPrice;
+  totalPriceValue.textContent = totalPrice > 0 ? formatPriceBr(totalPrice) : "Selecione um servico";
+  return totalPrice;
+}
+
+function closeAdditionalServiceSelector() {
+  if (!addOnToggle || !additionalServiceWrap || !additionalServiceInput) return;
+  addOnToggle.setAttribute("aria-expanded", "false");
+  additionalServiceWrap.hidden = true;
+  additionalServiceInput.value = "";
+}
+
+function setupAdditionalService() {
+  if (!serviceInput || !totalPriceValue) return;
+
+  serviceInput.addEventListener("change", updateTotalPriceDisplay);
+  serviceInput.addEventListener("input", updateTotalPriceDisplay);
+
+  if (additionalServiceInput) {
+    additionalServiceInput.addEventListener("change", updateTotalPriceDisplay);
+    additionalServiceInput.addEventListener("input", updateTotalPriceDisplay);
+  }
+
+  if (addOnToggle && additionalServiceWrap && additionalServiceInput) {
+    addOnToggle.addEventListener("click", () => {
+      const isExpanded = addOnToggle.getAttribute("aria-expanded") === "true";
+      const nextExpanded = !isExpanded;
+      addOnToggle.setAttribute("aria-expanded", String(nextExpanded));
+      additionalServiceWrap.hidden = !nextExpanded;
+      if (!nextExpanded) {
+        additionalServiceInput.value = "";
+      }
+      updateTotalPriceDisplay();
+    });
+  }
+
+  updateTotalPriceDisplay();
 }
 
 function syncWhatsappLinks() {
@@ -593,10 +653,14 @@ function setupBookingForm() {
     const formData = new FormData(bookingForm);
     const nome = String(formData.get("nome") || "").trim();
     const servico = String(formData.get("servico") || "").trim();
+    const servicoAdicional = String(formData.get("servicoAdicional") || "").trim();
     const dataDesejada = formatDatePtBr(String(formData.get("data") || "").trim());
     const horario = String(formData.get("horario") || "").trim();
+    const totalPrice = updateTotalPriceDisplay();
+    const additionalServiceText = servicoAdicional ? ` e o adicional ${servicoAdicional}` : "";
+    const totalPriceText = totalPrice > 0 ? ` Valor estimado ${formatPriceBr(totalPrice)}.` : "";
 
-    const message = `Ol\u00e1, meu nome \u00e9 ${nome}, gostaria de agendar ${servico} no dia ${dataDesejada} \u00e0s ${horario}.`;
+    const message = `Ola, meu nome e ${nome}, gostaria de agendar ${servico}${additionalServiceText} no dia ${dataDesejada} as ${horario}.${totalPriceText}`;
 
     const waUrl = buildWaUrl(message);
     const popup = window.open(waUrl, "_blank", "noopener,noreferrer");
@@ -605,6 +669,8 @@ function setupBookingForm() {
       bookingForm.reset();
       setupBookingDate();
       document.querySelectorAll(".time-slot").forEach((slot) => slot.classList.remove("is-active"));
+      closeAdditionalServiceSelector();
+      updateTotalPriceDisplay();
       return;
     }
 
@@ -624,5 +690,6 @@ setupGalleryShowcase();
 setupFaq();
 setupBookingDate();
 setupBookingFormValidation();
+setupAdditionalService();
 setupTimeSlots();
 setupBookingForm();
