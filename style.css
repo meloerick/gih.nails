@@ -1137,6 +1137,11 @@ h3 {
     right: 0;
     top: 80px;
     padding: 0 0.7rem;
+    pointer-events: none;
+  }
+
+  .main-nav.is-open {
+    pointer-events: auto;
   }
 
   .nav-list {

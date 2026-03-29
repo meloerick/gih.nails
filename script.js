@@ -24,6 +24,7 @@ const prefersFinePointer = window.matchMedia("(pointer:fine)").matches;
 
 const siteHeader = document.getElementById("siteHeader");
 const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
 const navList = document.getElementById("navList");
 const scrollProgress = document.getElementById("scrollProgress");
 const heroParallax = document.getElementById("heroParallax");
@@ -84,6 +85,7 @@ function setupMenu() {
 
   function setMenuState(isOpen) {
     navList.classList.toggle("is-open", isOpen);
+    mainNav?.classList.toggle("is-open", isOpen);
     menuToggle.classList.toggle("is-open", isOpen);
     menuToggle.setAttribute("aria-expanded", String(isOpen));
     menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
@@ -130,7 +132,7 @@ function setupMenu() {
     }
   });
 
-  syncMenuAccessibility(false);
+  setMenuState(false);
 }
 
 function setupScrollUI() {
@@ -598,15 +600,16 @@ function setupBookingForm() {
 
     const waUrl = buildWaUrl(message);
     const popup = window.open(waUrl, "_blank", "noopener,noreferrer");
-    if (!popup) {
-      setFormFeedback("Nao foi possivel abrir o WhatsApp automaticamente. Use o botao de WhatsApp.", "error");
+    if (popup) {
+      setFormFeedback("Agendamento pronto. Abrindo o WhatsApp para confirmacao.", "success");
+      bookingForm.reset();
+      setupBookingDate();
+      document.querySelectorAll(".time-slot").forEach((slot) => slot.classList.remove("is-active"));
       return;
     }
 
-    setFormFeedback("Agendamento pronto. Abrindo o WhatsApp para confirmacao.", "success");
-    bookingForm.reset();
-    setupBookingDate();
-    document.querySelectorAll(".time-slot").forEach((slot) => slot.classList.remove("is-active"));
+    setFormFeedback("Redirecionando para o WhatsApp para concluir seu agendamento.", "success");
+    window.location.href = waUrl;
   });
 }
 
