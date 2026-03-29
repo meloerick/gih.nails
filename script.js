@@ -37,8 +37,6 @@ const phoneInput = document.getElementById("telefone");
 const timeInput = document.getElementById("horario");
 const serviceInput = document.getElementById("servico");
 const additionalServiceInput = document.getElementById("servicoAdicional");
-const addOnToggle = document.getElementById("addOnToggle");
-const additionalServiceWrap = document.getElementById("additionalServiceWrap");
 const totalPriceValue = document.getElementById("totalPriceValue");
 
 function buildWaUrl(message) {
@@ -80,9 +78,7 @@ function updateTotalPriceDisplay() {
 }
 
 function closeAdditionalServiceSelector() {
-  if (!addOnToggle || !additionalServiceWrap || !additionalServiceInput) return;
-  addOnToggle.setAttribute("aria-expanded", "false");
-  additionalServiceWrap.hidden = true;
+  if (!additionalServiceInput) return;
   additionalServiceInput.value = "";
 }
 
@@ -95,19 +91,6 @@ function setupAdditionalService() {
   if (additionalServiceInput) {
     additionalServiceInput.addEventListener("change", updateTotalPriceDisplay);
     additionalServiceInput.addEventListener("input", updateTotalPriceDisplay);
-  }
-
-  if (addOnToggle && additionalServiceWrap && additionalServiceInput) {
-    addOnToggle.addEventListener("click", () => {
-      const isExpanded = addOnToggle.getAttribute("aria-expanded") === "true";
-      const nextExpanded = !isExpanded;
-      addOnToggle.setAttribute("aria-expanded", String(nextExpanded));
-      additionalServiceWrap.hidden = !nextExpanded;
-      if (!nextExpanded) {
-        additionalServiceInput.value = "";
-      }
-      updateTotalPriceDisplay();
-    });
   }
 
   updateTotalPriceDisplay();
