@@ -399,111 +399,6 @@ function setupHeroParallax() {
   });
 }
 
-function setupGalleryShowcase() {
-  const showcase = document.getElementById("galleryShowcase");
-  const galleryTrack = document.getElementById("galleryTrack");
-  const galleryDots = document.getElementById("galleryDots");
-  if (!showcase || !galleryTrack || !galleryDots) return;
-
-  const slides = Array.from(galleryTrack.querySelectorAll(".gallery-slide"));
-  const prevButton = showcase.querySelector(".gallery-prev");
-  const nextButton = showcase.querySelector(".gallery-next");
-  if (!slides.length) return;
-
-  let currentIndex = 0;
-  let autoplayId = 0;
-  const dots = [];
-
-  function setSlide(nextIndex) {
-    currentIndex = (nextIndex + slides.length) % slides.length;
-    galleryTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-    slides.forEach((slide, index) => {
-      const isActive = index === currentIndex;
-      slide.classList.toggle("is-active", isActive);
-      slide.setAttribute("aria-hidden", String(!isActive));
-    });
-
-    dots.forEach((dot, index) => {
-      const isActive = index === currentIndex;
-      dot.classList.toggle("is-active", isActive);
-      dot.setAttribute("aria-current", isActive ? "true" : "false");
-    });
-  }
-
-  slides.forEach((_, index) => {
-    const dotButton = document.createElement("button");
-    dotButton.type = "button";
-    dotButton.className = "gallery-dot";
-    dotButton.setAttribute("aria-label", `Ver imagem ${index + 1}`);
-    dotButton.addEventListener("click", () => {
-      setSlide(index);
-      restartAutoplay();
-    });
-    galleryDots.appendChild(dotButton);
-    dots.push(dotButton);
-  });
-
-  function nextSlide() {
-    setSlide(currentIndex + 1);
-  }
-
-  function previousSlide() {
-    setSlide(currentIndex - 1);
-  }
-
-  function stopAutoplay() {
-    if (!autoplayId) return;
-    window.clearInterval(autoplayId);
-    autoplayId = 0;
-  }
-
-  function startAutoplay() {
-    if (prefersReducedMotion || slides.length < 2) return;
-    stopAutoplay();
-    autoplayId = window.setInterval(nextSlide, 4300);
-  }
-
-  function restartAutoplay() {
-    stopAutoplay();
-    startAutoplay();
-  }
-
-  prevButton?.addEventListener("click", () => {
-    previousSlide();
-    restartAutoplay();
-  });
-
-  nextButton?.addEventListener("click", () => {
-    nextSlide();
-    restartAutoplay();
-  });
-
-  showcase.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft") {
-      previousSlide();
-      restartAutoplay();
-    }
-    if (event.key === "ArrowRight") {
-      nextSlide();
-      restartAutoplay();
-    }
-  });
-
-  showcase.addEventListener("pointerenter", stopAutoplay);
-  showcase.addEventListener("pointerleave", startAutoplay);
-  showcase.addEventListener("focusin", stopAutoplay);
-  showcase.addEventListener("focusout", (event) => {
-    const nextTarget = event.relatedTarget;
-    if (!(nextTarget instanceof Element) || !showcase.contains(nextTarget)) {
-      startAutoplay();
-    }
-  });
-
-  setSlide(0);
-  startAutoplay();
-}
-
 function setupFaq() {
   const questions = Array.from(document.querySelectorAll(".faq-question"));
   if (!questions.length) return;
@@ -669,7 +564,6 @@ setupActiveSectionTracking();
 setupRevealAnimation();
 setupCounterAnimation();
 setupHeroParallax();
-setupGalleryShowcase();
 setupFaq();
 setupBookingDate();
 setupBookingFormValidation();

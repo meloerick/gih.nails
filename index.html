@@ -6,7 +6,7 @@
     <meta name="description" content="Gih Campos Nail Design: studio premium em Canas - SP com aplicacao Gel Molde F1, banho de gel, blindagem e esmaltacao em gel com agendamento rapido pelo WhatsApp." />
     <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#d88ca5" />
     <meta name="format-detection" content="telephone=no" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="image" href="./images/gallery/fotorosto.png" />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css?v=20260413-03" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -137,7 +137,7 @@
 
             <div class="hero-actions">
               <a class="btn btn-primary" href="#agendar">Agendar horario</a>
-              <a class="btn btn-ghost" href="#servicos">Ver servicos</a>
+              <a class="btn btn-secondary" href="#servicos">Ver servicos</a>
             </div>
 
             <ul class="trust-points">
@@ -297,83 +297,119 @@
         <div class="container">
           <header class="section-head reveal">
             <p class="eyebrow">Galeria</p>
-            <h2>Resultados reais dos procedimentos mais procurados.</h2>
+            <h2>Resultados reais separados por categoria para facilitar sua escolha.</h2>
+            <p>Veja as fotos organizadas entre Aplicacao de Gel e Banho de Gel, do jeitinho que voce deixou nos arquivos.</p>
           </header>
 
-          <div class="gallery-showcase reveal" id="galleryShowcase" tabindex="0" aria-label="Galeria de resultados">
-            <button class="gallery-nav gallery-prev" type="button" aria-label="Imagem anterior">
-              &#10094;
-            </button>
-            <div class="gallery-viewport">
-              <div class="gallery-track" id="galleryTrack">
-                <figure class="gallery-slide">
+          <div class="gallery-categories">
+            <article class="gallery-category reveal" aria-labelledby="gallery-aplicacao-title">
+              <div class="gallery-category-header">
+                <p class="gallery-category-tag">Aplicacao de Gel</p>
+                <h3 id="gallery-aplicacao-title">Alongamentos com acabamento elegante, estrutura firme e brilho duradouro.</h3>
+              </div>
+
+              <div class="gallery-grid" aria-label="Fotos de aplicacao de gel">
+                <figure class="gallery-card">
                   <img
-                    src="./images/gallery/nail-01.jpeg"
-                    alt="Unhas com acabamento delicado e design sofisticado"
+                    src="./images/gallery/aplica%C3%A7%C3%A3o%20de%20gel.png"
+                    alt="Aplicacao de gel - resultado 1"
                     loading="eager"
                     decoding="async"
                     width="1200"
-                    height="900"
+                    height="1500"
                   />
+                  <figcaption>Aplicacao de Gel 01</figcaption>
                 </figure>
-                <figure class="gallery-slide">
+                <figure class="gallery-card">
                   <img
-                    src="./images/gallery/nail-02.jpeg"
-                    alt="Alongamento de unhas em estilo elegante"
+                    src="./images/gallery/aplica%C3%A7%C3%A3o%20de%20gel2.png"
+                    alt="Aplicacao de gel - resultado 2"
                     loading="lazy"
                     decoding="async"
                     width="1200"
-                    height="900"
+                    height="1500"
                   />
+                  <figcaption>Aplicacao de Gel 02</figcaption>
                 </figure>
-                <figure class="gallery-slide">
+                <figure class="gallery-card">
                   <img
-                    src="./images/gallery/nail-03.jpeg"
-                    alt="Unhas com acabamento uniforme e brilho intenso"
+                    src="./images/gallery/aplica%C3%A7%C3%A3odegel3.png"
+                    alt="Aplicacao de gel - resultado 3"
                     loading="lazy"
                     decoding="async"
                     width="1200"
-                    height="900"
+                    height="1500"
                   />
+                  <figcaption>Aplicacao de Gel 03</figcaption>
                 </figure>
-                <figure class="gallery-slide">
+                <figure class="gallery-card">
                   <img
-                    src="./images/gallery/nail-04.jpeg"
-                    alt="Ambiente premium de studio de unhas"
+                    src="./images/gallery/aplica%C3%A7%C3%A3o%20de%20gel4.png"
+                    alt="Aplicacao de gel - resultado 4"
                     loading="lazy"
                     decoding="async"
                     width="1200"
-                    height="900"
+                    height="1500"
                   />
-                </figure>
-                <figure class="gallery-slide">
-                  <img
-                    src="./images/gallery/nail-05.jpeg"
-                    alt="Unhas nude minimalistas com acabamento premium"
-                    loading="lazy"
-                    decoding="async"
-                    width="1200"
-                    height="900"
-                  />
-                </figure>
-                <figure class="gallery-slide">
-                  <img
-                    src="./images/gallery/nail-06.jpeg"
-                    alt="Unhas com esmalte intenso e acabamento espelhado"
-                    loading="lazy"
-                    decoding="async"
-                    width="1200"
-                    height="900"
-                  />
+                  <figcaption>Aplicacao de Gel 04</figcaption>
                 </figure>
               </div>
-            </div>
-            <button class="gallery-nav gallery-next" type="button" aria-label="Proxima imagem">
-              &#10095;
-            </button>
-          </div>
+            </article>
 
-          <div class="gallery-dots" id="galleryDots" aria-label="Selecionar imagem da galeria"></div>
+            <article class="gallery-category reveal" aria-labelledby="gallery-banho-title">
+              <div class="gallery-category-header">
+                <p class="gallery-category-tag">Banho de Gel</p>
+                <h3 id="gallery-banho-title">Unhas naturais com reforco, nivelamento bonito e acabamento premium.</h3>
+              </div>
+
+              <div class="gallery-grid" aria-label="Fotos de banho de gel">
+                <figure class="gallery-card">
+                  <img
+                    src="./images/gallery/banho%20de%20gel1.png"
+                    alt="Banho de gel - resultado 1"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="1500"
+                  />
+                  <figcaption>Banho de Gel 01</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                  <img
+                    src="./images/gallery/banho%20de%20gel2.png"
+                    alt="Banho de gel - resultado 2"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="1500"
+                  />
+                  <figcaption>Banho de Gel 02</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                  <img
+                    src="./images/gallery/banho%20de%20gel3.png"
+                    alt="Banho de gel - resultado 3"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="1500"
+                  />
+                  <figcaption>Banho de Gel 03</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                  <img
+                    src="./images/gallery/banho%20de%20gel4.png"
+                    alt="Banho de gel - resultado 4"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="1500"
+                  />
+                  <figcaption>Banho de Gel 04</figcaption>
+                </figure>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
       <section class="section section-soft" id="avaliacoes" data-cv="auto">
@@ -469,7 +505,7 @@
               Chame agora no WhatsApp e confirme seu agendamento.
             </p>
             <div class="cta-strong-actions">
-              <a class="btn btn-secondary" href="#agendar">Agendar horario</a>
+              <a class="btn btn-primary" href="#agendar">Agendar horario</a>
               <a class="btn btn-ghost cta-ghost" href="#agendar">Confirmar agendamento</a>
             </div>
             <ul class="cta-strong-points">
@@ -706,9 +742,9 @@
     </a>
 
     <div class="mobile-cta" id="mobileCta">
-      <a class="btn btn-secondary full" href="#agendar">Agendar horario</a>
+      <a class="btn btn-primary full" href="#agendar">Agendar horario</a>
     </div>
 
-    <script src="./script.js" defer></script>
+    <script src="./script.js?v=20260413-03" defer></script>
   </body>
 </html>
