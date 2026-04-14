@@ -1,5 +1,4 @@
 ﻿const WA_PHONE = "5512991468346";
-const DEFAULT_WA_MESSAGE = "Ol\u00e1, gostaria de agendar um hor\u00e1rio.";
 const MOBILE_BREAKPOINT = 768;
 const AVAILABLE_TIME_SLOTS = [
   "08:00",
@@ -98,12 +97,6 @@ function setupAdditionalService() {
   }
 
   updateTotalPriceDisplay();
-}
-
-function syncWhatsappLinks() {
-  document.querySelectorAll("[data-wa-link]").forEach((link) => {
-    link.href = buildWaUrl(DEFAULT_WA_MESSAGE);
-  });
 }
 
 function setupGalleryLightbox() {
@@ -630,7 +623,6 @@ function setupBookingForm() {
   });
 }
 
-syncWhatsappLinks();
 setupMenu();
 setupScrollUI();
 setupActiveSectionTracking();
