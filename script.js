@@ -1,6 +1,6 @@
-const WA_PHONE = "5512991468346";
+﻿const WA_PHONE = "5512991468346";
 const DEFAULT_WA_MESSAGE = "Ol\u00e1, gostaria de agendar um hor\u00e1rio.";
-const MOBILE_BREAKPOINT = 860;
+const MOBILE_BREAKPOINT = 768;
 const AVAILABLE_TIME_SLOTS = [
   "08:00",
   "09:00",
@@ -38,6 +38,10 @@ const timeInput = document.getElementById("horario");
 const serviceInput = document.getElementById("servico");
 const additionalServiceInput = document.getElementById("servicoAdicional");
 const totalPriceValue = document.getElementById("totalPriceValue");
+const galleryLightbox = document.getElementById("galleryLightbox");
+const galleryLightboxImage = document.getElementById("galleryLightboxImage");
+const galleryLightboxCaption = document.getElementById("galleryLightboxCaption");
+const galleryLightboxClose = document.getElementById("galleryLightboxClose");
 
 function buildWaUrl(message) {
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
@@ -102,6 +106,75 @@ function syncWhatsappLinks() {
   });
 }
 
+function setupGalleryLightbox() {
+  if (!galleryLightbox || !galleryLightboxImage || !galleryLightboxCaption) return;
+
+  const galleryCards = Array.from(document.querySelectorAll(".gallery-card"));
+  if (!galleryCards.length) return;
+
+  let activeCard = null;
+
+  function closeLightbox() {
+    galleryLightbox.hidden = true;
+    document.body.classList.remove("lightbox-open");
+    galleryLightboxImage.src = "";
+    galleryLightboxImage.alt = "";
+    galleryLightboxCaption.textContent = "";
+    if (activeCard instanceof HTMLElement) {
+      activeCard.focus();
+    }
+    activeCard = null;
+  }
+
+  function openLightbox(card) {
+    const image = card.querySelector("img");
+    const caption = card.querySelector("figcaption");
+    if (!(image instanceof HTMLImageElement)) return;
+
+    activeCard = card;
+    galleryLightboxImage.src = image.currentSrc || image.src;
+    galleryLightboxImage.alt = image.alt || "";
+    galleryLightboxCaption.textContent = caption?.textContent?.trim() || image.alt || "Imagem da galeria";
+    galleryLightbox.hidden = false;
+    document.body.classList.add("lightbox-open");
+    galleryLightboxClose?.focus();
+  }
+
+  galleryCards.forEach((card) => {
+    const image = card.querySelector("img");
+    const caption = card.querySelector("figcaption");
+    const fallbackLabel = image instanceof HTMLImageElement ? image.alt : "Imagem da galeria";
+    const label = caption?.textContent?.trim() || fallbackLabel;
+
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Abrir ${label}`);
+
+    card.addEventListener("click", () => openLightbox(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openLightbox(card);
+    });
+  });
+
+  galleryLightbox.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.hasAttribute("data-lightbox-close")) {
+      closeLightbox();
+    }
+  });
+
+  galleryLightboxClose?.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !galleryLightbox.hidden) {
+      closeLightbox();
+    }
+  });
+}
+
 function setupMenu() {
   if (!menuToggle || !navList) return;
 
@@ -132,6 +205,7 @@ function setupMenu() {
     menuToggle.classList.toggle("is-open", isOpen);
     menuToggle.setAttribute("aria-expanded", String(isOpen));
     menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+    document.body.classList.toggle("menu-open", isOpen && isMobileViewport());
     syncMenuAccessibility(isOpen);
   }
 
@@ -537,7 +611,6 @@ function setupBookingForm() {
     const totalPrice = updateTotalPriceDisplay();
     const additionalServiceText = servicoAdicional ? ` e o adicional ${servicoAdicional}` : "";
     const totalPriceText = totalPrice > 0 ? ` Valor estimado ${formatPriceBr(totalPrice)}.` : "";
-
     const message = `Olá, meu nome é ${nome} e gostaria de agendar ${servico}${additionalServiceText} no dia ${dataDesejada}, às ${horario}.${totalPriceText}`;
 
     const waUrl = buildWaUrl(message);
@@ -570,3 +643,4 @@ setupBookingFormValidation();
 setupAdditionalService();
 setupTimeSlots();
 setupBookingForm();
+setupGalleryLightbox();

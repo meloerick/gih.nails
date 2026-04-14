@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="image" href="./images/gallery/fotorosto.png" />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css?v=20260413-05" />
+    <link rel="stylesheet" href="./style.css?v=20260413-07" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -788,6 +788,19 @@
       <a class="btn btn-primary full" href="#agendar">Agendar horário</a>
     </div>
 
-    <script src="./script.js?v=20260413-05" defer></script>
+    <div class="gallery-lightbox" id="galleryLightbox" hidden>
+      <div class="gallery-lightbox__backdrop" data-lightbox-close></div>
+      <div class="gallery-lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="galleryLightboxCaption">
+        <button class="gallery-lightbox__close" id="galleryLightboxClose" type="button" aria-label="Fechar imagem">
+          Fechar
+        </button>
+        <figure class="gallery-lightbox__figure">
+          <img id="galleryLightboxImage" src="" alt="" />
+          <figcaption id="galleryLightboxCaption"></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <script src="./script.js?v=20260413-07" defer></script>
   </body>
 </html>
