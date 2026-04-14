@@ -73,7 +73,7 @@ function updateTotalPriceDisplay() {
   const mainServicePrice = parseSelectedServicePrice(serviceInput);
   const additionalPrice = parseSelectedServicePrice(additionalServiceInput);
   const totalPrice = mainServicePrice + additionalPrice;
-  totalPriceValue.textContent = totalPrice > 0 ? formatPriceBr(totalPrice) : "Selecione um servico";
+  totalPriceValue.textContent = totalPrice > 0 ? formatPriceBr(totalPrice) : "Selecione um serviço";
   return totalPrice;
 }
 
@@ -538,12 +538,12 @@ function setupBookingForm() {
     const additionalServiceText = servicoAdicional ? ` e o adicional ${servicoAdicional}` : "";
     const totalPriceText = totalPrice > 0 ? ` Valor estimado ${formatPriceBr(totalPrice)}.` : "";
 
-    const message = `Ola, meu nome e ${nome}, gostaria de agendar ${servico}${additionalServiceText} no dia ${dataDesejada} as ${horario}.${totalPriceText}`;
+    const message = `Olá, meu nome é ${nome} e gostaria de agendar ${servico}${additionalServiceText} no dia ${dataDesejada}, às ${horario}.${totalPriceText}`;
 
     const waUrl = buildWaUrl(message);
     const popup = window.open(waUrl, "_blank", "noopener,noreferrer");
     if (popup) {
-      setFormFeedback("Agendamento pronto. Abrindo o WhatsApp para confirmacao.", "success");
+      setFormFeedback("Agendamento pronto. Abrindo o WhatsApp para confirmação.", "success");
       bookingForm.reset();
       setupBookingDate();
       document.querySelectorAll(".time-slot").forEach((slot) => slot.classList.remove("is-active"));
